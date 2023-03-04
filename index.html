@@ -12,10 +12,20 @@
 
     <body>
 
-        <h1 id="autor">Autor: TU NOMBRE AQUÍ</h1>
+        <h1 id="autor">Autor: Andrea Z.Cano</h1>
 
         <!-- https://vuejs.org/v2/guide/index.html -->
         <div id="app">
+            <div class="jumbotron">
+                <h1 id="title">{{ col.collection.title }}</h1>
+            </div>
+            <div class="container">
+                <div class="row" style="margin-left: 20px;">
+                    <div class="card-group">
+                        <item-data v-for="i in item" :item="i"></item-data>
+                    </div>
+                </div>
+            </div>
             <!--
                  TODO: Aplicación VueJS. Ver archivo ./js/script.js
                - Mostrar el título de la colección dentro de un componente Jumbotron de Bootstrap https://getbootstrap.com/docs/4.0/components/jumbotron/. En su interior habrá un <h1> con id "title" que mostrará el título de la colección
@@ -25,31 +35,50 @@
 
         </div>
 
-
-
         <!-- Plantilla para el componente edit-form -->
         <script type="text/x-template" id="editForm">
-
+            <dl v-for="d in i.data" :itemData="d">
+                <dd> {{ d.prompt}} </dd>
+                <input v-if="d.prompt != 'Description'" v-model="d.value" type="text">
+                <textarea v-else v-model="d.value" type="text"></textarea>
+            </dl>
+            <button class="btn btn-primary" v-on:click="formClosed">Cerrar</button>
             <!--
                  TODO: Componente edit-form
             -->
 
         </script>
 
-
-
         <!-- Plantilla para el componente item-data -->
         <script type="text/x-template" id="itemData">
+            <div class="card">
+                <div class="card-body" v-show="datos">
+                    <dl v-for="d in item.data">
+                        <dt> {{ d.prompt}} </dt>
+                        <dd> {{ d.value }} </dd>
+                    </dl>
+                    <a :href="item.href" class="btn btn-primary" role="button">Ver</a>
+                    <button class="btn btn-secondary" v-on:click="toggleEditFormVisibility">Editar</button>
+                </div>
 
+                <div>
+                    <div class="card-body" v-show="edit">
+                        <dl v-for="d in item.data">
+                            <dd> {{ d.prompt}} </dd>
+                            <input v-if="d.prompt != 'Description'" v-model="d.value" type="text">
+                            <textarea v-else v-model="d.value" type="text"></textarea>
+                        </dl>
+                        <button class="btn btn-primary" v-on:click="formClose">Cerrar</button>
+                    </div>
+                </div>
+            </div>
             <!--
                  TODO: Componente item-data
             -->
-
         </script>
-
-
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="js/script.js"></script>
         <!-- TODO: Cargar librería VueJS y archivo js/script.js -->
-
     </body>
 
 </html>
